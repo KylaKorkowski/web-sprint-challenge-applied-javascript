@@ -27,23 +27,23 @@ const Card = (article) => {
   const cardImg = document.createElement('img');
   const cardName = document.createElement('span');
 
+  cardWrapper.appendChild(cardHeadline);
+  cardWrapper.appendChild(cardAuthor);
+  cardAuthor.appendChild(cardImgCon);
+  cardAuthor.appendChild(cardName);
+  cardImgCon.appendChild(cardImg);
+
   cardWrapper.classList.add('card');
   cardHeadline.classList.add('headline');
   cardAuthor.classList.add('author');
   cardImgCon.classList.add('img-container');
 
-  cardWrapper.appendChild(cardHeadline);
-  cardHeadline.appendChild(cardAuthor);
-  cardAuthor.appendChild(cardImgCon);
-  cardAuthor.appendChild(cardName);
-  cardImgCon.appendChild(cardImg);
+  cardName.textContent = article.authorName;
+  cardImg.src = article.authorPhoto;
+  cardHeadline.textContent = article.headline;
 
-  cardImg.src = authorphoto;
-  cardHeadline.textContent = headline;
-  cardName.textContent = authorname;
-
-  cardWrapper.addEventListener('click', () => {
-    console.log(cardHeadline);
+  cardWrapper.addEventListener('click', event => {
+    console.log(article.headline);
   })
 
   return cardWrapper;
@@ -59,16 +59,39 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-  // let appender = document.querySelector(selector);
-  // axios.get(`http://localhost:5001/api/articles`)
-  //   .then(resp => {
-  //     let articlesData = 
-  //   })
-  //   .catch(err => {
+  let cardCreator = document.querySelector(selector);
+  axios.get(`http://localhost:5001/api/articles`)
+    .then(resp => {
+      let articlesData = resp.data;
 
-  //   });
+      let articlesArr = [];
+      articlesArr.push(articlesData.articles.javascript[0]);
+      articlesArr.push(articlesData.articles.javascript[1]);
+      articlesArr.push(articlesData.articles.javascript[2]);
+      articlesArr.push(articlesData.articles.javascript[3]);
+      articlesArr.push(articlesData.articles.bootstrap[0]);
+      articlesArr.push(articlesData.articles.bootstrap[1]);
+      articlesArr.push(articlesData.articles.bootstrap[2]);
+      articlesArr.push(articlesData.articles.technology[0]);
+      articlesArr.push(articlesData.articles.technology[1]);
+      articlesArr.push(articlesData.articles.technology[2]);
+      articlesArr.push(articlesData.articles.jquery[0]);
+      articlesArr.push(articlesData.articles.jquery[1]);
+      articlesArr.push(articlesData.articles.jquery[2]);
+      articlesArr.push(articlesData.articles.node[0]);
+      articlesArr.push(articlesData.articles.node[1]);
+
+
+      articlesArr.forEach(item => {
+          const articleCard = Card(item);
+          cardCreator.appendChild(articleCard);
+        });
+    })
+    .catch(err => {
+      console.log("Shoots brah!", err);
+    });
   
-  //   return appender;
+    return cardCreator;
 
 }
 

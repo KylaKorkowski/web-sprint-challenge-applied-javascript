@@ -20,19 +20,27 @@ const Tabs = (topics) => {
   const tabsOne = document.createElement('div');
   const tabsTwo = document.createElement('div');
   const tabsThree = document.createElement('div');
+  const tabsFour = document.createElement('div');
+  const tabsFive = document.createElement('div');
 
   tabsTopics.classList.add('topics');
   tabsOne.classList.add('tab');
   tabsTwo.classList.add('tab');
   tabsThree.classList.add('tab');
+  tabsFour.classList.add('tab');
+  tabsFive.classList.add('tab');
 
   tabsTopics.appendChild(tabsOne);
   tabsTopics.appendChild(tabsTwo);
   tabsTopics.appendChild(tabsThree);
+  tabsTopics.appendChild(tabsFour);
+  tabsTopics.appendChild(tabsFive);
 
   tabsOne.textContent = topics[0];
   tabsTwo.textContent = topics[1];
   tabsThree.textContent = topics[2];
+  tabsFour.textContent = topics[3];
+  tabsFive.textContent = topics[4];
 
   return tabsTopics;
 }
@@ -50,8 +58,8 @@ const tabsAppender = (selector) => {
     .then(resp => {
       let tabsData = resp.data;
 
-      const tab = Tabs(tabsData.topics);
-      tabber.appendChild(tab);
+      const tab = Tabs(tabsData.topics)
+      tabber.appendChild(tab)
     })
     .catch(err => {
       console.log("Shoots! Nothing Brah.", err);
